@@ -7,6 +7,7 @@
 |
 */
 
+import Client from '#models/client'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 import router from '@adonisjs/core/services/router'
@@ -36,4 +37,9 @@ router.post('/login', async ({ request }: HttpContext) => {
   const token = await User.accessTokens.create(user)
 
   return {data: {user, token}}
+})
+
+router.get('/clients', async ({ request }: HttpContext) => {
+  const clients = await Client.all();
+  return clients.map((client) => client.toJSON())
 })
