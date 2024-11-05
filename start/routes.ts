@@ -8,6 +8,7 @@
 */
 
 import User from '#models/user'
+import type { HttpContext } from '@adonisjs/core/http'
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async () => {
@@ -27,9 +28,10 @@ router.post('/users', async({request}) => {
 
 })
 
-router.post('/auth/login', async ({request}) => {
-  const { username, password } = request.only(['username', 'password'])
-  const user = await User.verifyCredentials(username, password)
+router.post('/login', async ({ request }: HttpContext) => {
+  const { email, password } = request.only(['email', 'password'])
+
+  const user = await User.verifyCredentials(email, password)
 
   const token = await User.accessTokens.create(user)
 
