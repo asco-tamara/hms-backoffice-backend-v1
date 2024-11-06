@@ -7,10 +7,10 @@
 |
 */
 
-import Client from '#models/client'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
+const ClientsController = () => import('#controllers/clients_controller')
 const LoginController = () => import('#controllers/auth/login_controller')
 const RegisterController = () => import('#controllers/auth/register_controller')
 
@@ -30,10 +30,11 @@ router
   .as('auth')
 
 router
-  .get('/clients', async () => {
-    const clients = await Client.all();
-    return clients.map((client) => client.toJSON())
+  .group(() => {
+    router.get('/', [ClientsController, 'index']).as('clients.index')
   })
+  .prefix('/clients')
+  .as('clients')
   .use(
     middleware.auth({
       guards: ['api'],

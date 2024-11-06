@@ -8,11 +8,11 @@ export default class LoginController {
 
     const user = await User.verifyCredentials(email, password)
 
-    await User.accessTokens.create(user)
+    const token = await User.accessTokens.create(user)
 
     return {
       message: 'User logged in successfully',
-      data: { user },
+      data: { user, token },
     }
   }
 }
