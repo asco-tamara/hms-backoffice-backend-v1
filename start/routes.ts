@@ -20,11 +20,14 @@ router.get('/', async () => {
   }
 })
 
-router.group(() => {
-  router.post('/users/register', [RegisterController, 'store']).as('register.store')
+router
+  .group(() => {
+    router.post('/register', [RegisterController, 'store']).as('register.store')
 
-  router.post('/login', [LoginController, 'store']).as('login.store')
+    router.post('/login', [LoginController, 'store']).as('login.store')
 })
+  .prefix('/auth')
+  .as('auth')
 
 router
   .get('/clients', async () => {
