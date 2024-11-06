@@ -12,7 +12,8 @@ import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
-import auth from '@adonisjs/auth/services/main'
+
+const RegisterController = () => import('#controllers/auth/register_controller')
 
 router.get('/', async () => {
   return {
@@ -20,15 +21,8 @@ router.get('/', async () => {
   }
 })
 
-router.post('/users', async({request}) => {
-  const { email, firstName, lastName, phone, username, password } = request.body()
-  const user = User.create({ email, firstName, lastName, phone, username, password })
-
-  return {
-    message: 'success',
-    data: {...user}
-  }
-
+router.group(() => {
+  router.post('/users/register', [RegisterController, 'store']).as('register.store')
 })
 
 router.post('/login', async ({ request }: HttpContext) => {
