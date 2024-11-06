@@ -11,6 +11,8 @@ import Client from '#models/client'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
+import auth from '@adonisjs/auth/services/main'
 
 router.get('/', async () => {
   return {
@@ -39,7 +41,13 @@ router.post('/login', async ({ request }: HttpContext) => {
   return {data: {user, token}}
 })
 
-router.get('/clients', async ({ request }: HttpContext) => {
-  const clients = await Client.all();
-  return clients.map((client) => client.toJSON())
-})
+router
+  .get('/clients', async () => {
+    const clients = await Client.all();
+    return clients.map((client) => client.toJSON())
+  })
+  .use(
+    middleware.auth({
+      guards: ['api'],
+    })
+  )
