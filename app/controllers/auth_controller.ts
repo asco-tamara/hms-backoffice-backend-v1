@@ -22,20 +22,22 @@ export default class AuthController {
 
     const user = await User.verifyCredentials(email, password)
 
-    let token = await User.accessTokens.create(user)
+    const tokenRecord = await User.accessTokens.create(user)
 
-    token = token.toJSON()
+    const { token } = tokenRecord.toJSON()
 
     return {
       message: 'User logged in successfully',
-      data: { user, accessToken: token.token},
+      data: { user, accessToken: token },
     }
   }
 
   async me({ auth }: HttpContext) {
-    let user = await auth.authenticateUsing(['api'])
+    const userRecord = await auth.authenticateUsing(['api'])
 
-    user = user.toJSON()
+    const user = userRecord.toJSON()
+
+    console.log('user: ', user)
 
     return {
       message: `Welcome ${user.firstName} ${user.lastName}`,
