@@ -41,7 +41,17 @@ export default class AuthController {
 
     return {
       message: `Welcome ${user.firstName} ${user.lastName}`,
-      data: { user },
+      data: { ...user },
+    }
+  }
+
+  async logout({ auth }: HttpContext) {
+    const userRecord = await auth.authenticateUsing(['api'])
+
+    await User.accessTokens.delete(userRecord as User, userRecord.currentAccessToken.identifier)
+
+    return {
+      message: 'Logout successful',
     }
   }
 }
