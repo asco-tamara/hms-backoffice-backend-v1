@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
 
-export const clientStoreValidator = vine.compile(
+export const hotelStoreValidator = vine.compile(
   vine.object({
     name: vine.string(),
     website: vine
@@ -10,14 +10,14 @@ export const clientStoreValidator = vine.compile(
       })
       // .activeUrl()
       .unique(async (db, value) => {
-        const client = await db.from('clients').where('website', value).first()
-        return !client
+        const hotel = await db.from('hotels').where('website', value).first()
+        return !hotel
       })
       .optional(),
   })
 )
 
-export const clientUpdateValidator = vine.compile(
+export const hotelUpdateValidator = vine.compile(
   vine.object({
     name: vine.string().optional(),
     website: vine
@@ -27,8 +27,8 @@ export const clientUpdateValidator = vine.compile(
       })
       // .activeUrl()
       .unique(async (db, value) => {
-        const client = await db.from('clients').where('website', value).first()
-        return !client
+        const hotel = await db.from('hotels').where('website', value).first()
+        return !hotel
       })
       .optional(),
   })

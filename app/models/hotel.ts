@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
-export default class Client extends BaseModel {
+export default class Hotel extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -10,6 +10,9 @@ export default class Client extends BaseModel {
 
   @column()
   declare website: string
+
+  @column()
+  declare email: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
