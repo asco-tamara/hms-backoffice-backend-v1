@@ -27,7 +27,7 @@ router
 
     router.get('/me', [AuthController, 'me'])
 
-    router.delete('/logout', [AuthController, 'logout'])
+    router.post('/logout', [AuthController, 'logout'])
 })
   .prefix('/auth')
 
