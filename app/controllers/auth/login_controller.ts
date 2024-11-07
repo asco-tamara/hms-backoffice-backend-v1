@@ -8,11 +8,13 @@ export default class LoginController {
 
     const user = await User.verifyCredentials(email, password)
 
-    const token = await User.accessTokens.create(user)
+    let token = await User.accessTokens.create(user)
+
+    token = token.toJSON()
 
     return {
       message: 'User logged in successfully',
-      data: { user, token },
+      data: { user, accessToken: token.token},
     }
   }
 }
