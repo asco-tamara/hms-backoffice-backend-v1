@@ -27,12 +27,12 @@ router
 
     router.get('/me', [AuthController, 'me'])
 
-    router.get('/logout', [AuthController, 'logout'])
+    router.delete('/logout', [AuthController, 'logout'])
 })
   .prefix('/auth')
 
 router
-  .group(() => {
+  .group(() => {g
     router.get('/', [ClientsController, 'index']).as('clients.index')
 
     router.post('/store', [ClientsController, 'store']).as('clients.store')
