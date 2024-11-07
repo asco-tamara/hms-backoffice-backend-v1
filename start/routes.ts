@@ -32,7 +32,7 @@ router
   .prefix('/auth')
 
 router
-  .group(() => {g
+  .group(() => {
     router.get('/', [ClientsController, 'index']).as('clients.index')
 
     router.post('/store', [ClientsController, 'store']).as('clients.store')
