@@ -6,7 +6,7 @@ export default class HotelsController {
   async index({ response }: HttpContext) {
     const hotels = await Hotel.all()
 
-    return response.ok(hotels)
+    return response.ok({ data: hotels })
   }
 
   async store({ request }: HttpContext) {
@@ -29,6 +29,9 @@ export default class HotelsController {
     hotel.merge(payload)
     await hotel.save()
 
-    return hotel
+    return {
+      message: `${hotel.name} data successfully updated`,
+      data: { hotel },
+    }
   }
 }
